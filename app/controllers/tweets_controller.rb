@@ -1,4 +1,7 @@
 class TweetsController < ApplicationController
+  before_action :require_session
+
+
 
   def index
     @tweet = Tweet.new
@@ -29,13 +32,25 @@ class TweetsController < ApplicationController
 
   def destroy
     @tweet = Tweet.find(params[:id])
-    @tweet.destroy!
-    redirect_to root_path, :flash => {:success => "Tweet was removed"}
+    if (current_user == @tweet.user || current_user.moderator)
+      @tweet.destroy!
+      redirect_to root_path, :flash => {:success => "Tweet was removed"}
+    else
+      redirect_to :back, :flash => {:failure => "You do not have correct permissions"}
+    end
   end
 
   private
 
   def post_params
     params.require(:tweet).permit(:content)
+  end
+
+  def require_session
+    if current_user == nil
+      redirect_to new_user_session_path
+    else
+
+    end
   end
 end

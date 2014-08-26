@@ -14,9 +14,10 @@
     .well
       %dl.dl-horizontal
       - @tweets.each do |t|
-        %dt= t.author(t)
-        %dd= t.content
-        - if current_user == t.user
-          %small= link_to "Delete Post", tweet_path(t), method: :delete
-        %br
+        .tweet
+          %dt= t.author(t)
+          %dd= t.content
+          - if (current_user == t.user || current_user.moderator)
+            %small= link_to "Delete Tweet", tweet_path(t), method: :delete
+          %br
         %br

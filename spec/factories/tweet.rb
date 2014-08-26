@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :tweet do
-    # content "@omniscient_bob yo"
-    # user
+    content "@omniscient_bob yo"
+    user
   end
 end
 
