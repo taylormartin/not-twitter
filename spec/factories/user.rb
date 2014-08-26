@@ -8,7 +8,7 @@ FactoryGirl.define do
   end
 
   # v- create :moderator
-  factory :moderator do
+  factory :moderator, class: User do
     #   ...
   end
 end
