@@ -11,7 +11,7 @@ feature 'Moderation' do
     # Should see 3 tweets
     expect( page.all(".tweet").count ).to eq 3
 
-    click_on "Delete Tweet", match: :first
+    first(:link, "Delete Tweet").click
 
     # Should see 2 tweets
     expect( page.all(".tweet").count ).to eq 2
