@@ -27,7 +27,10 @@ class TweetsController < ApplicationController
   def edit
   end
 
-  def delete
+  def destroy
+    @tweet = Tweet.find(params[:id])
+    @tweet.destroy!
+    redirect_to root_path, :flash => {:success => "Tweet was removed"}
   end
 
   private

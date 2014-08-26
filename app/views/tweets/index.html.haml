@@ -1,4 +1,5 @@
-%p Homepage
+%h1 Homepage
+%br
 .container
   = form_for(@tweet) do |t|
 
@@ -15,4 +16,7 @@
       - @tweets.each do |t|
         %dt= t.author(t)
         %dd= t.content
+        - if current_user == t.user
+          %small= link_to "Delete Post", tweet_path(t), method: :delete
+        %br
         %br
