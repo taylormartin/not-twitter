@@ -23,21 +23,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # This defines user.jobs to be the relation of all of this
-  #   user's jobs
-  has_many :jobs
 
-  # Defines user.favorites
-  has_many :favorites
-  has_many :favorited_jobs, through: :favorites,
-    source: :job
-  # ^- we want this to describe jobs that the user
-  #   has favorited, but there is a name collision
+  has_many :tweets
 
-  has_many :phones
-
-  def has_favorited?(job)
-    # favorited_jobs.to_a.any? { |fav| fav.job == job }
-    favorites.where(job: job).exists?
-  end
 end

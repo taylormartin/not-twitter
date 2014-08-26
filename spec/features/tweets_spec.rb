@@ -5,7 +5,6 @@ feature 'Tweeting' do
     user = create :user
     login user
     visit root_path
-
     fill_in "Tweet", with: "Omniscient Bob"
     click_on "Submit"
 

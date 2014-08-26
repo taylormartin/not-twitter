@@ -1,0 +1,18 @@
+%p Homepage
+.container
+  = form_for(@tweet) do |t|
+
+    = t.label :content, "New Tweet"
+    = t.text_field :content
+
+    = t.submit "Submit"
+
+  .container
+  .br
+    %h2 Timeline
+    .well
+      %dl.dl-horizontal
+      - @tweets.each do |t|
+        %dt= t.author(t)
+        %dd= t.content
+        %br
