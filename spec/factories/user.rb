@@ -7,8 +7,8 @@ FactoryGirl.define do
     password_confirmation "awfulPass"
   end
 
-  # v- create :admin
-  # factory :admin do
-  #   ...
-  # end
+  # v- create :moderator
+  factory :moderator do
+    #   ...
+  end
 end
