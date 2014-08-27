@@ -40,5 +40,22 @@ describe TweetsController do
     # end.to change(Tweet, :count).by 1
   end
 
-  it 'does not let non-moderators delete others tweets'
+  it 'does not let non-moderators delete others tweets' do
+    user = create :user
+    sign_in user
+
+    # create :tweet, user: user
+    # ^- assigns existing user
+    # v- creates a new user
+    tweet = create :tweet
+    # could say `create :tweet, user: create(:user)`
+
+    expect( user.id ).not_to eq tweet.user_id
+
+    request.env["HTTP_REFERER"] = root_path
+    delete :destroy, id: tweet.id
+
+    expect( response ).not_to be_successful
+    expect( Tweet.find(tweet.id) ).to be_present
+  end
 end
