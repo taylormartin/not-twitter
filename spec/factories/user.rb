@@ -9,6 +9,9 @@ FactoryGirl.define do
 
   # v- create :moderator
   factory :moderator, class: User do
-    #   ...
+    email "moderator@example.com"
+    password "awfulPass"
+    password_confirmation "awfulPass"
+    moderator true
   end
 end
