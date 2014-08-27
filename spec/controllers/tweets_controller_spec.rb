@@ -21,15 +21,23 @@ describe TweetsController do
     # rspec has `expect { }.to change(Tweet, :count) ...`
   end
 
-  skip 'lets moderators delete tweets' do
+  it 'lets moderators delete tweets' do
     moderator = create :moderator
     tweet     = create :tweet
+    sign_in moderator
 
     # send `delete` HTTP verb to the `destroy` action
     #   on TweetsController (from describe block)
     #   specifying :id to be the tweet id
     delete :destroy, id: tweet.id
-    binding.pry
+    # expect( Tweet.find_by_id tweet.id ).to eq nil
+    expect do
+      Tweet.find tweet.id
+    end.to raise_error ActiveRecord::RecordNotFound
+
+    # expect do
+    #   delete :destroy, id: tweet.id
+    # end.to change(Tweet, :count).by 1
   end
 
   it 'does not let non-moderators delete others tweets'
