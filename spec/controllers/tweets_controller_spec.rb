@@ -58,4 +58,16 @@ describe TweetsController do
     expect( response ).not_to be_successful
     expect( Tweet.find(tweet.id) ).to be_present
   end
+
+  it 'lets users delete their own tweet' do
+    user = create :user
+    sign_in user
+    tweet = create :tweet, user: user
+
+    delete :destroy, id: tweet.id
+
+    expect do
+      Tweet.find tweet.id
+    end.to raise_error ActiveRecord::RecordNotFound
+  end
 end

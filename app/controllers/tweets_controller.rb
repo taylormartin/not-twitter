@@ -30,12 +30,12 @@ class TweetsController < ApplicationController
 
   def destroy
     @tweet = Tweet.find(params[:id])
-    if (current_user == @tweet.user || current_user.moderator)
-      @tweet.destroy!
-      redirect_to root_path, :flash => {:success => "Tweet was removed"}
-    else
-      redirect_to :back, :flash => {:failure => "You do not have correct permissions"}
-    end
+    # unless can? :delete, @tweet
+    #   ... raise an authorization error
+    authorize! :delete, @tweet
+
+    @tweet.destroy!
+    redirect_to root_path, :flash => {:success => "Tweet was removed"}
   end
 
   private

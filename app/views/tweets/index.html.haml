@@ -17,7 +17,9 @@
         .tweet
           %dt= t.author
           %dd= t.content
-          - if (current_user == t.user || current_user.moderator)
+          / Checks if the Ability for current_user allows this
+          /   action on this object
+          - if can? :delete, t
             %small= link_to "Delete Tweet", tweet_path(t), method: :delete
           %br
         %br
