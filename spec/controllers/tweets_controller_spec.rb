@@ -16,6 +16,7 @@ describe TweetsController do
     before = Tweet.count
     post :create, tweet: { content: "Here's a tweet" }
     expect( response.status ).to eq 302
+    expect( flash[:success] ).to be_present
     expect( Tweet.count - before ).to eq 1
     # rspec has `expect { }.to change(Tweet, :count) ...`
   end
