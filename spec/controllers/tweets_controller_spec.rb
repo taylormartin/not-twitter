@@ -8,6 +8,18 @@ describe TweetsController do
     expect( response.status ).to eq 200 # Code for success
   end
 
+  it 'allows a user to post a tweet' do
+    # Doing this v should really create a new tweet
+    user = create :user
+    sign_in user
+
+    before = Tweet.count
+    post :create, tweet: { content: "Here's a tweet" }
+    expect( response.status ).to eq 302
+    expect( Tweet.count - before ).to eq 1
+    # rspec has `expect { }.to change(Tweet, :count) ...`
+  end
+
   skip 'lets moderators delete tweets' do
     moderator = create :moderator
     tweet     = create :tweet
