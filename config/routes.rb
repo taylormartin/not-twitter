@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   resources :tweets
 
+  get "api/tweets" => "tweets#index"
+
   root to: "tweets#index"
 end

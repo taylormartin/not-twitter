@@ -4,6 +4,23 @@ class TweetsController < ApplicationController
   def index
     @tweet = Tweet.new
     @tweets = Tweet.ordered
+
+    respond_to do |format|
+      format.json do
+        #result = []
+        #@tweets.each do |tweet|
+        #  result.push({
+        #    id:      tweet.id,
+        #    user:    tweet.user,
+        #    content: tweet.content
+        #  })
+        #end
+
+        # Calls to_json on @tweets and sends back that string
+        render :json => @tweets
+      end
+      format.html { render :index }
+    end
   end
 
   def show
