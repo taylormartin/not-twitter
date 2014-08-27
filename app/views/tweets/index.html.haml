@@ -15,7 +15,7 @@
       %dl.dl-horizontal
       - @tweets.each do |t|
         .tweet
-          %dt= t.author(t)
+          %dt= t.author
           %dd= t.content
           - if (current_user == t.user || current_user.moderator)
             %small= link_to "Delete Tweet", tweet_path(t), method: :delete

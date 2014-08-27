@@ -20,7 +20,7 @@ feature 'Moderation' do
     #   ... ?
   end
 
-  pending 'does not let regular users remove tweets' do
+  it 'does not let regular users remove tweets' do
     # Regular user doesn't see delete tweet button
     # Even direct posts can't delete
     #   post delete_tweet_path(...)
@@ -29,7 +29,7 @@ feature 'Moderation' do
     login user
 
     tweet = create :tweet
-    delete tweet_path(tweet)
+    page.driver.submit :delete, "/tweets/#{tweet.id}", {}
     expect( Tweet.find tweet.id ).to be_present
   end
 end

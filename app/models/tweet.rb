@@ -4,9 +4,8 @@ class Tweet < ActiveRecord::Base
   belongs_to :user
 
 
-  def author(tweet)
-    users_id = tweet[:user_id]
-    user = User.find(users_id)
+  def author
+
     user[:email]
   end
 

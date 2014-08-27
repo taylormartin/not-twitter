@@ -49,8 +49,6 @@ class TweetsController < ApplicationController
   def require_session
     if current_user == nil
       redirect_to new_user_session_path
-    else
-
     end
   end
 end
