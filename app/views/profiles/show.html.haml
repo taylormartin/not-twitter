@@ -1,0 +1,38 @@
+%h4= "Profile - #{current_user.email}"
+
+%h3 Tweets
+.row
+  .col-md-3
+    %table.table
+      %tbody
+      - @tweets.each do |tweet|
+        %tr
+          %td= tweet.content
+  .col-md-9
+
+%h3 Followers
+.row
+  .col-md-3
+    %table.table
+      %tbody
+      - @followers.each do |follower|
+        %tr
+          %td= follower
+  .col-md-9
+
+%h3 Following
+.row
+  .col-md-4
+    %table.table
+      %thead
+        %tr
+          %th User
+          %th Unfollow
+      %tbody
+      - @following.each do |followed|
+        %tr
+          %td= followed[0]
+          =form_tag(profile_path(current_user.id), method: :delete) do
+            =hidden_field_tag :followed_id, followed[1]
+            %td= submit_tag 'Unfollow'
+  .col-md-8

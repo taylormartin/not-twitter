@@ -1,1 +1,31 @@
-%p Homepage
+%h4 Homepage
+
+- if current_user
+  %p
+    = form_tag("/tweets", method: "post") do
+      = label_tag( "Compose a Tweet")
+      %br
+      = text_field_tag "Tweet"
+      = submit_tag "Submit"
+  %br
+  %br
+  .row
+    .col-md-6
+      %table.table
+        %thead
+          %tr
+            %th Tweet
+            %th User
+            %th When
+        %tbody
+        - @tweets.each do |tweet|
+          %tr
+            %td= tweet.content
+            %td= tweet.user.email
+            %td= tweet.created_at.strftime("%d %b. %Y")
+    .col-md-6
+
+
+- else
+  %li= link_to "Log In", new_user_session_path
+  %li= link_to "Sign up", new_user_registration_path

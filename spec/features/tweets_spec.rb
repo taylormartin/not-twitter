@@ -6,11 +6,11 @@ feature 'Tweeting' do
     login user
     visit root_path
 
-    fill_in "Tweet", with: "Omniscient Bob"
+    fill_in "content", with: "Omniscient Bob"
     click_on "Submit"
 
     # v- could be more specific, should mention flash
-    expect( page ).to have_content "Successful"
+    expect( page ).to have_content "Successful Tweet!"
     # v- could specify content of tweet, at top of list, etc.
     expect( page ).to have_content "Omniscient Bob"
 

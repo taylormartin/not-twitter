@@ -1,0 +1,18 @@
+%h4 Users
+
+.row
+  .col-md-6
+    %table.table
+      %thead
+        %tr
+          %th User
+          %th Follow
+      %tbody
+      - @users.each do |user|
+        - unless user.id == current_user.id
+          %tr
+            %td= user.email
+            =form_tag(profiles_path, method: :post) do
+              =hidden_field_tag :followed_id, user.id
+              %td= submit_tag 'Follow'
+  .col-md-6

@@ -16,10 +16,12 @@
     %nav.navbar.navbar-default
       .container
         .navbar-header
-          = link_to "", root_path, class: "navbar-brand"
+          = link_to "Home", root_path, class: "navbar-brand"
 
         %ul.nav.navbar-nav
-          / Main links will go here
+          - if current_user
+            %li= link_to "Users", profiles_path
+            %li= link_to "Profile", profile_path(current_user.id)
 
         %ul.nav.navbar-nav.pull-right
           - if current_user

@@ -1,43 +1,29 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id                     :integer          not null, primary key
-#  email                  :string(255)      default(""), not null
-#  encrypted_password     :string(255)      default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string(255)
-#  last_sign_in_ip        :string(255)
-#  created_at             :datetime
-#  updated_at             :datetime
-#
-
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # This defines user.jobs to be the relation of all of this
-  #   user's jobs
-  has_many :jobs
+  has_many :tweets, dependent: :destroy
 
-  # Defines user.favorites
-  has_many :favorites
-  has_many :favorited_jobs, through: :favorites,
-    source: :job
-  # ^- we want this to describe jobs that the user
-  #   has favorited, but there is a name collision
-
-  has_many :phones
-
-  def has_favorited?(job)
-    # favorited_jobs.to_a.any? { |fav| fav.job == job }
-    favorites.where(job: job).exists?
+  def user_tweets(id)
+    Tweet.where(user_id: id)
   end
+
+  def homepage_tweets(id)
+    user_ids = [id]
+    Relationship.where(follower_id: id).each { |x| user_ids << x.followed_id }
+    Tweet.where(user_id: user_ids).order(created_at: :desc)
+  end
+
+  def following(id)
+    relationships = Relationship.where(follower_id: id)
+    relationships.map { |r| [User.where(id: r.followed_id)[0].email, r.followed_id] }
+  end
+
+  def followers(id)
+    relationships = Relationship.where(followed_id: id)
+    relationships.map { |r| User.where(id: r.follower_id)[0].email }
+  end
+
 end
