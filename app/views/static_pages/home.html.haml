@@ -5,7 +5,7 @@
     = form_tag("/tweets", method: "post") do
       = label_tag( "Compose a Tweet")
       %br
-      = text_field_tag "Tweet"
+      = text_field_tag "tweet"
       = submit_tag "Submit"
   %br
   %br
@@ -23,9 +23,19 @@
             %td= tweet.content
             %td= tweet.user.email
             %td= tweet.created_at.strftime("%d %b. %Y")
+            -if current_user.moderator == true || tweet.user == current_user
+              =form_tag(tweet_path(tweet.id), method: :delete) do
+                %td= submit_tag 'Delete'
     .col-md-6
-
 
 - else
   %li= link_to "Log In", new_user_session_path
   %li= link_to "Sign up", new_user_registration_path
+
+
+-# - @following.each do |followed|
+-#   %tr
+-#     %td= followed[0]
+-#     =form_tag(profile_path(current_user.id), method: :delete) do
+-#       =hidden_field_tag :followed_id, followed[1]
+-#       %td= submit_tag 'Unfollow'

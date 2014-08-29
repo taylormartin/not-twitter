@@ -13,10 +13,11 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
+gem 'cancan'
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  # gem 'better_errors'
+  # gem 'binding_of_caller'
   gem 'pry-rails'
   gem 'quiet_assets'
   gem 'spring'
@@ -25,11 +26,11 @@ end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', require: false
+  gem 'rspec-rails'
 end
 
 group :test do
-  gem 'rspec-rails'
   gem 'capybara'
   gem 'launchy'
   gem 'simplecov'

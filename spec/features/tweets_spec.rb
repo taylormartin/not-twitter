@@ -6,7 +6,8 @@ feature 'Tweeting' do
     login user
     visit root_path
 
-    fill_in "content", with: "Omniscient Bob"
+    fill_in "tweet", with: "Omniscient Bob"
+
     click_on "Submit"
 
     # v- could be more specific, should mention flash

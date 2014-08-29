@@ -1,0 +1,25 @@
+%h1 Homepage
+%br
+.container
+  = form_for(@tweet) do |t|
+
+    = t.label :content, "New Tweet"
+    = t.text_field :content
+
+    = t.submit "Submit"
+
+  .container
+  .br
+    %h2 Timeline
+    .well
+      %dl.dl-horizontal
+      - @tweets.each do |t|
+        .tweet
+          %dt= t.author
+          %dd= t.content
+          / Checks if the Ability for current_user allows this
+          /   action on this object
+          - if can? :delete, t
+            %small= link_to "Delete Tweet", tweet_path(t), method: :delete
+          %br
+        %br
