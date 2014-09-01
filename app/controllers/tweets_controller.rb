@@ -9,9 +9,11 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    #need to add security measures here
-    Tweet.destroy(Tweet.find_by_id(params[:id]))
-    redirect_to :root
+    if current_user.id == Tweet.find_by_id(params[:id]).user_id || current_user.moderator == true
+      Tweet.destroy(Tweet.find_by_id(params[:id]))
+      redirect_to :root
+    else
+      flash[:alert] = "You are not authorized to remove this tweet"
+    end
   end
-
 end
